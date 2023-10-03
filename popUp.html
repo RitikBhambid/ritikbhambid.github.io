@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Close Pop-up on Click Outside</title>
+    <style>
+        /* Styles for the pop-up container */
+        .popup-container {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+            z-index: 999;
+        }
+
+        /* Hidden state */
+        .popup-container.hidden {
+            transform: translateX(-50%) translateY(100%);
+        }
+    </style>
+</head>
+<body>
+    <!-- Button to trigger the pop-up -->
+    <button onclick="showPopup()">Show Pop-up</button>
+
+    <!-- The pop-up container -->
+    <div class="popup-container hidden" id="popup">
+        This is a pop-up message that appears from the bottom. Click anywhere outside to close.
+    </div>
+
+    <script>
+        // Function to show the pop-up
+        function showPopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('hidden');
+            
+            // Add a click event listener to the document to close the pop-up on outside click
+            document.addEventListener('click', outsideClickHandler);
+        }
+
+        // Function to handle clicks outside of the pop-up
+        function outsideClickHandler(event) {
+            const popup = document.getElementById('popup');
+            
+            // Check if the click target is not the pop-up
+            if (!popup.contains(event.target)) {
+                closePopup();
+            }
+        }
+
+        // Function to close the pop-up
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.add('hidden');
+            
+            // Remove the click event listener from the document
+            document.removeEventListener('click', outsideClickHandler);
+        }
+    </script>
+</body>
+</html>
